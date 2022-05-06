@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 27 Apr 2022 pada 09.06
--- Versi server: 10.4.6-MariaDB
--- Versi PHP: 7.3.9
+-- Host: localhost
+-- Waktu pembuatan: 06 Bulan Mei 2022 pada 10.11
+-- Versi server: 10.1.40-MariaDB
+-- Versi PHP: 7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -41,8 +41,8 @@ CREATE TABLE `author` (
 INSERT INTO `author` (`id_author`, `nama`, `status`) VALUES
 (1, 'Richard Adkins', 'Senior'),
 (2, 'Pein Akatsuki', 'Senior'),
-(4, 'Ken Northwood', 'Pendatang Baru'),
-(5, 'ad', 'Pendatang Baru');
+(4, 'Ken Northwood', 'Senior'),
+(5, 'ad', 'Senior');
 
 -- --------------------------------------------------------
 
@@ -66,7 +66,7 @@ CREATE TABLE `buku` (
 INSERT INTO `buku` (`id_buku`, `judul_buku`, `penerbit`, `deskripsi`, `status`, `id_author`) VALUES
 (1, 'Alan Wade', 'Premium #', 'Cerita dibalik cerita', 'Best Seller', 2),
 (2, 'Awan', 'Akamedia', 'buku tentang cerita awan, hujan, langit', 'Best Seller', 1),
-(4, 'Puisi Patrick Star', 'Patrick', 'mawar itu biru, violet itu merah', '-', 2);
+(4, 'Puisi Patrick Star', 'Patrick', 'mawar itu biru, violet itu merah', 'Best Seller', 2);
 
 -- --------------------------------------------------------
 
@@ -79,6 +79,38 @@ CREATE TABLE `member` (
   `nama` varchar(100) NOT NULL,
   `jurusan` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `member`
+--
+
+INSERT INTO `member` (`nim`, `nama`, `jurusan`) VALUES
+('1207786', 'Monkey D Luffy', 'Ilmu Komunikasi'),
+('1308900', 'Roronoa Zoro', 'Teknik Kedokteran');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `peminjaman`
+--
+
+CREATE TABLE `peminjaman` (
+  `id_pinjaman` int(11) NOT NULL,
+  `tanggal_pinjam` date DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `id_buku` int(11) DEFAULT NULL,
+  `nim` varchar(50) CHARACTER SET latin1 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Dumping data untuk tabel `peminjaman`
+--
+
+INSERT INTO `peminjaman` (`id_pinjaman`, `tanggal_pinjam`, `status`, `id_buku`, `nim`) VALUES
+(6, '2022-05-05', 'dipinjam', 4, '1308900'),
+(7, '2022-05-06', 'dipinjam', 1, '1207786'),
+(9, '2022-05-01', 'dikembalikan', 4, '1207786'),
+(10, '2022-05-04', 'dipinjam', 2, '1207786');
 
 --
 -- Indexes for dumped tables
@@ -104,6 +136,14 @@ ALTER TABLE `member`
   ADD PRIMARY KEY (`nim`);
 
 --
+-- Indeks untuk tabel `peminjaman`
+--
+ALTER TABLE `peminjaman`
+  ADD PRIMARY KEY (`id_pinjaman`),
+  ADD KEY `id_buku` (`id_buku`),
+  ADD KEY `nim` (`nim`);
+
+--
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
@@ -120,6 +160,12 @@ ALTER TABLE `buku`
   MODIFY `id_buku` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT untuk tabel `peminjaman`
+--
+ALTER TABLE `peminjaman`
+  MODIFY `id_pinjaman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
@@ -128,6 +174,13 @@ ALTER TABLE `buku`
 --
 ALTER TABLE `buku`
   ADD CONSTRAINT `buku_ibfk_1` FOREIGN KEY (`id_author`) REFERENCES `author` (`id_author`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `peminjaman`
+--
+ALTER TABLE `peminjaman`
+  ADD CONSTRAINT `id_buku` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `nim` FOREIGN KEY (`nim`) REFERENCES `member` (`nim`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
