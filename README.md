@@ -1,7 +1,7 @@
 # LATIHAN11DPBO2022
 Object Oriented Design and Programming Class
 
-> Saya D'Riski Maulana 2008149 mengerjakan tugas TP3 dalam mata kuliah Desain dan Pemrograman Berbasis Objek untuk keberkahanNya maka saya tidak melakukan kecurangan seperti yang telah dispesifikasikan. Aamiin
+> Saya D'Riski Maulana 2008149 mengerjakan tugas Latihan11 dalam mata kuliah Desain dan Pemrograman Berbasis Objek untuk keberkahanNya maka saya tidak melakukan kecurangan seperti yang telah dispesifikasikan. Aamiin
 
 **Results**
 
